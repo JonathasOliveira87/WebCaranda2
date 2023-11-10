@@ -1,0 +1,70 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+    /* Outras propriedades globais aqui */
+  }
+
+main {
+    background-color: rgba(235, 248, 248, 0.466);
+  }
+
+.container {
+    padding: 50px;
+}
+
+.title {
+    padding: 20px 0 20px 0;
+}
+
+#GPS {
+    margin: 20px 0 20px 0;
+}
+
+#bysize {
+    margin: 0 0 0 20px;
+}
+
+.message {
+    padding: 10px 20px;
+    margin-bottom: 0px;
+    list-style: none;
+    border: 1px dashed #999;
+    font-size: .9em;
+}
+  
+.success {
+background-color: #c1e7c19a;
+}
+
+.error {
+background-color: #ffb3b3;
+}
+
+.warning {
+background-color: #ffe066;
+}
+
+.info {
+background-color: #b3d8ff;
+}
+
+#photoPerfil {
+    border-radius: 50%;
+    border: 3px solid #a3a2a2;
+    
+}
+
+.d-block {
+    max-width: 100%;
+    height: auto;
+}
+
+
+footer {
+    flex-shrink: 0;
+    text-align: center;
+    background-color: whitesmoke;
+    padding: 50px 0;
+}

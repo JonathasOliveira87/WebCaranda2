@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}contato{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-5">    
+            <div class="mb-1">
+                <h4 class="title">Contatos</h4>
+                <h5 class="title">Celular   </h5>
+                {% for contact in contacts %}
+                <h6>{{ contact.whatsapp }}  <img id="tel" src="{% static 'img/whatsapp.png' %}" width="30" height="30" alt=""></h6>
+                <hr>
+                <h5 class="title">Como Chegar</h5>
+                <h6>{{ contact.address }} <img id="bysize" src="{% static 'img/pin.png' %}" width="30" height="30" alt=""> </h6>
+                <hr>
+                <!-- Adicione um link para abrir o Google Maps com target="_blank" -->
+                <a href="https://www.google.com/maps/dir/?api=1&destination={{ contact.lat }},{{ contact.lng }}" target="_blank">
+                  <button class="btn btn-primary">Abrir o GPS</button>
+                </a><br>
+                <iframe src="https://www.google.com/maps/embed?pb=!4v1697544441903!6m8!1m7!1sUZLQv7L-YnY39L7N4-ShkQ!2m2!1d-22.31399925254906!2d-46.92283303444815!3f136.10075596030026!4f-27.233213240686673!5f0.7820865974627469" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                {% endfor %}
+            </div>
+        </div>
+
+
+        <div class="col-sm-6">
+          <form action="{% url 'contato' %}" method="POST">
+            {% csrf_token %}
+            <h4 class="title">Formulário para Contato</h4>
+            <div class="mb-3">
+                <label  class="form-label">Nome</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Seu nome">
+              </div>
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">E-mail</label>
+                <input type="email" class="form-control" id="email"  name="email" placeholder="name@example.com">
+              </div>
+              <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">Mensagem</label>
+                <textarea class="form-control" id="contact" name="contact" rows="5"></textarea>
+              </div>
+              <input class="btn btn-primary" type="submit" value="Enviar Mensagem">
+          </form>
+        </div>
+    </div>
+  </div>
+
+{% endblock %}
+
+

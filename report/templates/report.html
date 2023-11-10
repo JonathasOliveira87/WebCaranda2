@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Boletim Mensal{% endblock %}
+
+{% block content %}
+
+
+<div class="container">
+  <div class="row">
+      <div class="col-mb-1">
+        <div class="card">
+          <div class="card-body">
+
+            <figure class="text-center">
+              <blockquote class="blockquote">
+                <p>"Encontre boletins, atas e documentos importantes para se manter informado."</p>
+              </blockquote>
+              <figcaption class="blockquote-footer">
+                Caranda 2 <cite title="Source Title">condomínio Residencial</cite>
+              </figcaption>
+            </figure>
+            <br><br>
+
+
+            <div class="accordion" id="accordionExample">
+              {% for item in itens %}
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="heading{{ item.id }}">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ item.id }}" aria-expanded="false" aria-controls="collapse{{ item.id }}">
+                    {{ item.title }} <br> {{ item.created }}
+                  </button>
+                </h2>
+                <div id="collapse{{ item.id }}" class="accordion-collapse collapse" aria-labelledby="heading{{ item.id }}" data-bs-parent="#accordionExample">
+                  <div class="accordion-body">
+                    {{ item.text }} <br> <br>
+                    <p>Download do arquivo: {{ item.file.name|cut:"upload/"|cut:"\\" }} 
+                    <a  target="_blank" href="{% url 'download_file' item.id %}"> <img id="bysize" src="{% static 'img/down.png' %}" width="60" height="60" alt=""></a></p>
+                  </div>
+                </div>
+
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Enquetes{% endblock %}
+
+{% block content %}
+
+{% if votar %}
+<div class="container">
+    <div class="row">
+      <iframe class="votar" src="{{ form_url }}" width="640" height="1250" frameborder="0" marginheight="0" marginwidth="0">Carregando…</iframe>
+    </div>
+</div>
+{% else %}
+
+
+<div class="container">
+  <div class="row">
+      <div class="col-mb-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Sem Votação no momento!</h5>
+                <p class="card-text">Confira seus formulários de votações clicando no botao abaixo</p>
+                <a href="https://forms.google.com/" target="_blank" class="btn btn-dark">Confira seus votos</a><br><br>
+                <img src="{% static 'img/sem-votacao.jpg' %}"  width="400" height="300" alt="sem votação ativa">
+            </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+
+{% endif %}
+
+
+{% endblock %}

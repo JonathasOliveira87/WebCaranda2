@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}index{% endblock %}
+
+{% block content %}
+
+
+
+
+
+<div class="container">
+    <div class="row">
+
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-body">
+                    <img src="{% static 'img/assembleia.png' %}" class="card-img-top" alt="foto assembléia">
+                    <h5 class="card-title">Assembléia Geral</h5>
+                    <p class="card-text">Acesse as informações das assembléias para manter-se atualizado e não deixe de voltar.</p>
+                    {% if user.is_authenticated %}
+                      <a href="{% url 'enquete' %}" class="btn btn-dark">Leia as Discas</a>
+                    {% else %}
+                      <p>Faça o login para acessar o boletim informativo.</p>
+                    {% endif %} 
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <div class="card">
+                <div class="card-body">
+                    <img src="{% static 'img/seguranca.jpg' %}" class="card-img-top" alt="foto segurança">
+                    <h5 class="card-title">Dicas de Segurança</h5>
+                    <p class="card-text">Mantenha-se informado com nossas dicas de segurança para um condomínio mais seguro.</p>
+                    {% if user.is_authenticated %}
+                      <a href="{% url 'seguranca' %}" class="btn btn-dark">Leia as Discas</a>
+                    {% else %}
+                      <p>Faça o login para acessar o boletim informativo.</p>
+                    {% endif %}               
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+          <div class="card">
+              <div class="card-body">
+                  <img src="{% static 'img/boletim.jpg' %}" class="card-img-top" alt="foto BOLETIM">
+                  <h5 class="card-title">Boletim Mensal</h5>
+                  <p class="card-text">Fique por dentro das últimas notícias do condomínio com nosso boletim informativo mensal.</p>
+                  {% if user.is_authenticated %}
+                      <a href="{% url 'boletim' %}" class="btn btn-dark">Leia o Boletim</a>
+                  {% else %}
+                      <p>Faça o login para acessar o boletim informativo.</p>
+                  {% endif %}
+              </div>
+          </div>
+      </div>
+
+      
+      
+
+    </div>
+</div>
+
+{% endblock %}

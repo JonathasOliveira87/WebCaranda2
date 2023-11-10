@@ -1,0 +1,373 @@
+
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Painel do Usuário{% endblock %}
+
+{% block content %}
+
+
+
+
+<div class="container">
+  <div class="card">
+    <div class="card-body">
+
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" id="perfil-tab" data-bs-toggle="tab" data-bs-target="#perfil" type="button" role="tab" aria-controls="perfil" aria-selected="true">Meu Perfil</button>
+        </li>
+
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#mp" type="button" role="tab" aria-controls="profile" aria-selected="false">Mensagem Privada</button>
+        </li>
+
+      </ul>
+
+
+      <div class="tab-content" id="myTabContent">
+
+        <div class="tab-pane fade show active" id="perfil" role="tabperfil" aria-labelledby="perfil-tab">
+          <form action="{% url 'update_photo' %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+              <div class="d-flex justify-content-center align-items-center">
+                <div class="card" style="width: 30rem;">
+                  <div class="card-body text-center">
+                    {% if itens.profile_pic %}
+                      <img id="photoPerfil" src="{{ itens.profile_pic.url }}" width="250" height="250" alt="Foto do Perfil">
+                      {% else %}
+                      <img id="photoPerfil" src="{% static 'img/no-photo.png' %}" width="250" height="250" alt="Foto do Perfil">
+                    {% endif %}
+                  </div>
+                  <div class="card-text">
+                    <ul class="list-group">
+                      <li class="list-group-item text-center">
+                        <input type="file" name="new_photo">
+                        <input class="btn btn-dark" type="submit" value="Salvar Foto">
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+          </form>
+        
+
+
+          <div class="card-text d-flex justify-content-center align-items-center">
+            <ul class="list-group" style="width: 40rem;">
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>Nome: {{ itens.user.username }}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                    <span>E-mail: {{ itens.user.email }}</span>
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#editeEmail"><img id="bysize" src="{% static 'img/update.png' %}" width="30" height="30" alt="atualizar"></a>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                  <span>Contato: {{ itens.telefone}}</span>
+                  <a href="#" data-bs-toggle="modal" data-bs-target="#editePhone"><img id="bysize" src="{% static 'img/update.png' %}" width="30" height="30" alt="atualizar"></a>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                  <span>Morador: {{ itens.morador }}</span>
+                  <a href="#" data-bs-toggle="modal" data-bs-target="#editeMorar"><img id="bysize" src="{% static 'img/update.png' %}" width="30" height="30" alt="atualizar"></a>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                  <span>Proprietário: {{ itens.dono }}</span>
+                  <a href="#" data-bs-toggle="modal" data-bs-target="#editeDono"><img id="bysize" src="{% static 'img/update.png' %}" width="30" height="30" alt="atualizar"></a>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                  <span>Número da Casa: {{ itens.casa }}</span>
+                  <a href="#" data-bs-toggle="modal" data-bs-target="#editeCasa"><img id="bysize" src="{% static 'img/update.png' %}" width="30" height="30" alt="atualizar"></a>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                  <span>Carro: {{ itens.carro }}</span>
+                  <a href="#" data-bs-toggle="modal" data-bs-target="#editeCarro"><img id="bysize" src="{% static 'img/update.png' %}" width="30" height="30" alt="atualizar"></a>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                  <span>Moto: {{ itens.moto }}</span>
+                  <a href="#" data-bs-toggle="modal" data-bs-target="#editeMoto"><img id="bysize" src="{% static 'img/update.png' %}" width="30" height="30" alt="atualizar"></a>
+                </li>
+                <li class="list-group-item d-flex justify-content-between">
+                  <span>Pet: {{ itens.pet }}</span>
+                  <a href="#" data-bs-toggle="modal" data-bs-target="#editePet"><img id="bysize" src="{% static 'img/update.png' %}" width="30" height="30" alt="atualizar"></a>
+                </li>
+            </ul>
+            
+          </div>
+        </div>
+        
+
+        <!-- Modal atualizar email -->
+        <form action="{% url 'update_email' %}" method="POST">
+          {% csrf_token %}
+        <div class="modal fade" id="editeEmail" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editeEmailLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="editeEmailLabel">Atualizar e-mail</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+
+              <div class="modal-body">      
+                <div class="row g-2">
+                  <div class="col-md">
+                    <div class="form-floating mb-3">
+                      <input type="email" id="email" name="email" class="form-control"  placeholder="name@example.com">
+                      <label for="floatingInputGrid">Cadastre seu novo e-mail</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <input class="btn btn-primary" type="submit" value="Atualizar">
+              </div>
+
+            </div>
+          </div>
+        </div>
+        </form>
+
+        <!-- Modal atualizar telefone -->
+        <form action="{% url 'update_phone' %}" method="POST">
+          {% csrf_token %}
+          <div class="modal fade" id="editePhone" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editePhoneLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="editePhoneLabel">Atualizar Telefone</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">      
+                  <div class="row g-2">
+                    <div class="col-md">
+                      <div class="form-floating mb-3">
+                        <input type="tel" id="phone" name="telefone" class="form-control" minlength="11" placeholder="Seu novo número de telefone com o DDD">
+                        <label for="phone">Cadastre seu novo número de telefone com o DDD</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+  
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                  <input class="btn btn-primary" type="submit" value="Atualizar">
+                </div>
+  
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <!-- Modal morador -->
+        <form action="{% url 'update_morar' %}" method="POST">
+          {% csrf_token %}
+          <div class="modal fade" id="editeMorar" data-bs-backdrop="static" data-bs-keyboard="false"  aria-labelledby="editeMorarLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="editeMorarLabel">Você é o Residente</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">      
+                  <div class="row">
+                    <div class="col-md">
+
+                        <select class="form-select" aria-label="Default select example" id="morar" name="morador">
+                          <option selected>Escolha uma opção:</option>
+                          <option value="Sim">Sim</option>
+                          <option value="Não">Não</option>
+                        </select>
+
+                    </div>
+                  </div>
+                </div>
+
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                  <input class="btn btn-primary" type="submit" value="Atualizar">
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <!-- Modal dono -->
+        <form action="{% url 'update_dono' %}" method="POST">
+          {% csrf_token %}
+          <div class="modal fade" id="editeDono" data-bs-backdrop="static" data-bs-keyboard="false"  aria-labelledby="editeDonoLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="editeDonoLabel">Você é o Proprietário</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">      
+                  <div class="row">
+                    <div class="col-md">
+
+                        <select class="form-select" aria-label="Default select example" id="dono" name="dono">
+                          <option selected>Escolha uma opção:</option>
+                          <option value="Sim">Sim</option>
+                          <option value="Não">Não</option>
+                        </select>
+
+                    </div>
+                  </div>
+                </div>
+
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                  <input class="btn btn-primary" type="submit" value="Atualizar">
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <!-- Modal número da casa -->
+        <form action="{% url 'update_casa' %}" method="POST">
+          {% csrf_token %}
+          <div class="modal fade" id="editeCasa" data-bs-backdrop="static" data-bs-keyboard="false"  aria-labelledby="editeCasaLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="editeCasaLabel">Você é o Proprietário</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">      
+                  <div class="row">
+                    <div class="col-md">
+                      <div class="form-floating mb-3">
+                        <input type="number" id="casa" name="casa" class="form-control" placeholder="Digite o número da sua casa">
+                        <label for="phone">Digite o número da sua casa</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                  <input class="btn btn-primary" type="submit" value="Atualizar">
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <!-- Modal do carro -->
+        <form action="{% url 'update_carro' %}" method="POST">
+          {% csrf_token %}
+          <div class="modal fade" id="editeCarro" data-bs-backdrop="static" data-bs-keyboard="false"  aria-labelledby="editeCarroLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="editeCarroLabel">Cadastre seu carro!</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">      
+                  <div class="row">
+                    <div class="col-md">
+                      <div class="form-floating mb-3">
+                        <input type="text" id="carro" name="carro" class="form-control"  placeholder="Digite o modelo e a placa do seu carro">
+                        <label for="text">Digite o modelo e a placa do seu carro</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                  <input class="btn btn-primary" type="submit" value="Atualizar">
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <!-- Modal de moto -->
+        <form action="{% url 'update_moto' %}" method="POST">
+          {% csrf_token %}
+          <div class="modal fade" id="editeMoto" data-bs-backdrop="static" data-bs-keyboard="false"  aria-labelledby="editeMotoLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="editeMotoLabel">Cadastre sua moto!</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">      
+                  <div class="row">
+                    <div class="col-md">
+                      <div class="form-floating mb-3">
+                        <input type="text" id="moto" name="moto" class="form-control"  placeholder="Digite o modelo e a placa da sua moto">
+                        <label for="text">Digite o modelo e a placa da sua moto</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                  <input class="btn btn-primary" type="submit" value="Atualizar">
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <!-- Modal pet -->
+        <form action="{% url 'update_pet' %}" method="POST">
+          {% csrf_token %}
+          <div class="modal fade" id="editePet" data-bs-backdrop="static" data-bs-keyboard="false"  aria-labelledby="editePetLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="editePetLabel">Tem Pet?</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">      
+                  <div class="row">
+                    <div class="col-md">
+
+                        <select class="form-select" aria-label="Default select example" id="pet" name="pet">
+                          <option selected>Escolha uma opção:</option>
+                          <option value="Sim">Sim</option>
+                          <option value="Não">Não</option>
+                        </select>
+
+                    </div>
+                  </div>
+                </div>
+
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                  <input class="btn btn-primary" type="submit" value="Atualizar">
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </form>
+
+      <div class="tab-pane fade" id="mp" role="tabpanel" aria-labelledby="profile-tab">
+        Em Construção!
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}
